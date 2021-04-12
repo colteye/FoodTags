@@ -16,7 +16,7 @@ FoodTags can currently use analog thermistors/photoresistors to measure temperat
 ### This includes:
 - PCB and Circuit Schematics
 - Embedded C code for the MSP430G2553 and RF430CL330H
-- An alternative LTspice design for a low power (maximum current draw of 4.8 mA @ 3V) AM transmitter version of FoodTags with much lower BOM costs.
+- An alternative LTspice design for a low power (maximum current draw of 4.8 mA @ 3V) AM transmitter version of FoodTags with much lower BOM costs. This version outputs a ~15.6 MHz AM signal which is modulated using the output of the thermistor/photoresistor.
 
 <img src="https://user-images.githubusercontent.com/6888483/114380420-106df100-9b58-11eb-8701-e8c3cd75c9e1.PNG" width="70%" height="70%">
 
