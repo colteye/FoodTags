@@ -31,7 +31,7 @@
                                                                                         \
 /* (32 bytes) Message + Record Header End */                                            \
                                                                                         \
-/* NDEF data First 4 bytes = product ID, rest = 32 measurements. */                     \
+/* NDEF data First 4 bytes = product ID, rest = 24 measurements @ 6 bytes each. */      \
 0xFF, 0xFF, 0xFF, 0xFF,                                                                 \
 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,                                                     \
 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,                                                     \

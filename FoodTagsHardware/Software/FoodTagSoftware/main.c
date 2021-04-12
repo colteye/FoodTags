@@ -1,20 +1,31 @@
 #include <food_tag_software.h>
-#include <RF430_example.h>
+#include <RF430_example.h> //Code to help interact with RF430 using I2C.
 #include <stdint.h>
 #include "msp430.h"
 
+// First address of information memory for MSP430G2553.
 #define DATA_START_ADDR 0x1000
+
+// Power of 2 Modulus Operator for indexing.
 #define MODULO(x, m) ( x & (m - 1) )
+
+// Verify that a sample is valid.
 #define VALID_SAMPLE(t_i_ptr) ( (t_i_ptr->temp <= 1024) && (t_i_ptr->illum <= 1024) )
+
+// Flash sectors are 64 bytes.
 #define FLASH_SECTOR_SIZE 64
+
+// Reserved flash size for 24 measurements.
 #define MAX_FLASH_SIZE 192
 
+// Struct for each tag sample.
 struct Temp_Illum_Time {
     uint16_t temp;
     uint16_t illum;
     uint16_t timestamp;
 };
 
+// Function prototypes.
 void Init_MSP430(void);
 void Init_RF430(void);
 void Collect_Temp_Illum_Sample();
@@ -22,10 +33,16 @@ void Create_Temp_Illum_NDEF();
 void Write_Flash_Segment(uint8_t *src_data, uint16_t dest_seg_addr);
 void Read_Flash_Segment(uint8_t *dest_data, uint16_t src_seg_addr);
 
+// Hardcoded product ID, would ideally be programmed by vendor.
 uint32_t product_ID = 0x53535454;
+
+// Init a message buffer to store measurements.
 uint8_t NDEF_msg_buf[] = TAG_TEMP_ILLUM_DEFAULT_DATA;
+
+// Check if RF430CL330H has woken up.
 uint8_t into_fired = 0;
 
+// Main execution.
 void main(void)
 {
     // Initialize MSP430.
@@ -182,61 +199,83 @@ void Collect_Temp_Illum_Sample()
     ADC10CTL0 &= ~(REFON + ADC10ON);
     ADC10CTL0 = 0;
 
+    // Make sure sensor data is placed correctly!
     struct Temp_Illum_Time sample = { sensor_data[1], sensor_data[0], 0 };
-    //struct Temp_Illum_Time sample = { 200, 100, 0, 0, 0 };
 
+    // Data buffer for reading/writing from flash.
+    uint8_t data_buf[FLASH_SECTOR_SIZE];
+
+    // Various indexers.
     uint8_t i, j;
-    uint8_t data_buf [FLASH_SECTOR_SIZE];
     uint8_t prev_i = 0;
     uint8_t cur_i = 0;
     uint8_t cnt_i = 0;
 
+    // Insert measurement into flash memory.
+    // Acts as a pseudo circular queue.
+    // e.g 1..2..3..4..5 -> 6..2..3..4..5
+    // Infinite loop until return statement is reached (May need to be bound to a reset button?)
     while (1)
     {
+        // Iterate over all flash sectors.
         for (i = 0; i < MAX_FLASH_SIZE; i += FLASH_SECTOR_SIZE)
         {
+            // Read data into buffer.
             Read_Flash_Segment(data_buf, DATA_START_ADDR + i);
 
             for (j = 0; j < FLASH_SECTOR_SIZE; j += 8)
             {
+                // Each measurement stored as 6 bytes in a 8 byte block.
                 struct Temp_Illum_Time *cur_sample = (struct Temp_Illum_Time *)&data_buf[j];
                 cur_i = cur_sample->timestamp;
 
+                // If the current sample is invalid, it's address can be inserted into.
                 if (!VALID_SAMPLE(cur_sample))
                 {
+                    // Set appropriate time stamp and write flash segment with new measurement.
                     sample.timestamp = cnt_i;
                     memcpy(cur_sample, &sample, sizeof(struct Temp_Illum_Time));
                     Write_Flash_Segment(data_buf, DATA_START_ADDR + i);
                     return;
                 }
+                // If all samples are valid, check if the previous time stamp was larger.
                 else if (MODULO(prev_i, UINT8_MAX + 1) > cur_i)
                 {
+                    // If so, we can add the measurement here to enforce the queue.
                     sample.timestamp = MODULO(prev_i + 1, UINT8_MAX + 1);
                     memcpy(cur_sample, &sample, sizeof(struct Temp_Illum_Time));
                     Write_Flash_Segment(data_buf, DATA_START_ADDR + i);
                     return;
                 }
+                // Set previous to current index.
                 prev_i = cur_i;
+
+                // Increment cnt_i with modulus looping (255..256..0..1..2..)
                 cnt_i = MODULO(cnt_i + 1, UINT8_MAX + 1);
             }
         }
     }
 }
 
-// Measure temperature and illumination sensors using ADC.
-// sensor_data should be a uint16_t array of size 2.
+// Create NDEF message from sample flash data and product ID.
 void Create_Temp_Illum_NDEF()
 {
+    // Copy ID into NDEF message buffer.
     memcpy(&NDEF_msg_buf[32], &product_ID, sizeof(uint32_t));
 
+    // Indexers.
     uint8_t i, j;
     uint8_t ndef_i = 36;
-    uint8_t data_buf[64];
 
+    // Data buffer for reading flash.
+    uint8_t data_buf[FLASH_SECTOR_SIZE];
+
+    // Iterate over all available flash for sampling.
     for (i = 0; i < MAX_FLASH_SIZE; i += FLASH_SECTOR_SIZE)
     {
         Read_Flash_Segment(data_buf, DATA_START_ADDR + i);
 
+        // Copy flash memory to NDEF message for each sample.
         for (j = 0; j < FLASH_SECTOR_SIZE; j += 8)
         {
             struct Temp_Illum_Time *cur_sample = (struct Temp_Illum_Time *)&data_buf[j];
@@ -249,52 +288,54 @@ void Create_Temp_Illum_NDEF()
     }
 }
 
+// Write to information flash with appropriate delays.
 void Write_Flash_Segment(uint8_t *src_data, uint16_t dest_seg_addr)
 {
-    while (FCTL3 & BUSY);
+    while (FCTL3 & BUSY);                                   // Make sure flash is available
 
-    uint8_t *Flash_ptr;                          // Flash pointer
+    uint8_t *Flash_ptr;                                     // Flash pointer
     uint16_t i;
 
-    Flash_ptr = (uint8_t *) dest_seg_addr;         // Initialize Flash pointer
+    Flash_ptr = (uint8_t *) dest_seg_addr;                  // Initialize Flash pointer
 
-    FCTL1 = FWKEY + ERASE;                    // Set Erase bit
-    FCTL3 = FWKEY;                            // Clear Lock bit
-    *Flash_ptr = 0;                           // Dummy write to erase Flash segment
+    FCTL1 = FWKEY + ERASE;                                  // Set Erase bit
+    FCTL3 = FWKEY;                                          // Clear Lock bit
+    *Flash_ptr = 0;                                         // Dummy write to erase Flash segment
 
-    while(FCTL3 & BUSY);
+    while(FCTL3 & BUSY);                                    // Make sure flash is available
 
-    FCTL1 = FWKEY + WRT;                      // Set WRT bit for write operation
+    FCTL1 = FWKEY + WRT;                                    // Set WRT bit for write operation
 
-    for (i = 0; i < 64; i++)
+    for (i = 0; i < FLASH_SECTOR_SIZE; i++)
     {
-        while (FCTL3 & BUSY);
-        *Flash_ptr++ = src_data[i];                   // Write value to flash
+        while (FCTL3 & BUSY);                               // Make sure flash is available
+        *Flash_ptr++ = src_data[i];                         // Write value to flash
     }
 
-    while(FCTL3 & BUSY);
+    while(FCTL3 & BUSY);                                    // Make sure flash is available
 
-    FCTL1 = FWKEY;                            // Clear WRT bit
-    FCTL3 = FWKEY + LOCK;                     // Set LOCK bit
+    FCTL1 = FWKEY;                                          // Clear WRT bit
+    FCTL3 = FWKEY + LOCK;                                   // Set LOCK bit
 }
 
+// Read from information flash with appropriate delays.
 void Read_Flash_Segment(uint8_t *dest_data, uint16_t src_seg_addr)
 {
-    while (FCTL3 & BUSY);
+    while (FCTL3 & BUSY);                                   // Make sure flash is available
 
-    uint8_t *Flash_ptr;                          // Flash pointer
+    uint8_t *Flash_ptr;                                     // Flash pointer
     uint16_t i;
 
-    Flash_ptr = (uint8_t *) src_seg_addr;         // Initialize Flash pointer
+    Flash_ptr = (uint8_t *) src_seg_addr;                   // Initialize Flash pointer
 
-    for (i = 0; i < 64; i++)
+    for (i = 0; i < FLASH_SECTOR_SIZE; i++)
     {
-        while (FCTL3 & BUSY);
-        dest_data[i] = *Flash_ptr++;
+        while (FCTL3 & BUSY);                               // Make sure flash is available
+        dest_data[i] = *Flash_ptr++;                        // Read flash byte
     }
 }
 
-// ADC10 interrupt service routince.
+// ADC10 interrupt service routine.
 #pragma vector=ADC10_VECTOR
 __interrupt void ADC10_ISR(void)
 {
