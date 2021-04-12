@@ -19,3 +19,5 @@ It can currently use analog thermistors/photoresistors to measure temperature an
 - An alternative design for a low power (maximum current draw of 4.8 mA @ 3V) AM transmitter version of FoodTags
 
 <img src="https://user-images.githubusercontent.com/6888483/114380420-106df100-9b58-11eb-8701-e8c3cd75c9e1.PNG" width="70%" height="70%">
+
+## Main Contributors: Erik Coltey, Regina Monteavaro
