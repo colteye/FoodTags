@@ -1,4 +1,4 @@
-### Bill of Materials
+# Bill of Materials
 
 ## Capacitors
 - GRM0335C1H100JA01D capacitor, 10pF $0.00285 @ qty 1000
