@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="5UL-UK-xWV">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--FoodTagsMenuView-->
+        <scene sceneID="m9v-00-HZm">
+            <objects>
+                <viewController title="FoodTagsMenuView" id="hKq-fJ-BLh" customClass="FoodTagsMenuViewController" customModule="FoodTagsApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="1Ku-ol-GaG"/>
+                        <viewControllerLayoutGuide type="bottom" id="fac-oT-lqD"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="f5K-gp-Uyb">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="623"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="jIm-oP-IqN">
+                                <rect key="frame" x="59" y="539" width="256" height="63"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemGray6Color"/>
+                                <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="20"/>
+                                <state key="normal" title="Scan FoodTag"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                        <integer key="value" value="8"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="beginScanning:" destination="hKq-fJ-BLh" eventType="touchUpInside" id="nzl-s6-by2"/>
+                                </connections>
+                            </button>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="logo.png" translatesAutoresizingMaskIntoConstraints="NO" id="0fi-nY-hPe">
+                                <rect key="frame" x="12" y="44" width="350" height="450"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout" bottom="YES"/>
+                    <navigationItem key="navigationItem" id="cBv-dq-5sE"/>
+                    <connections>
+                        <segue destination="zEh-iY-fqE" kind="show" identifier="TagDataSegue" id="OtY-sS-Eh7"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gBl-A1-pgM" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1031.2" y="-520.38980509745136"/>
+        </scene>
+        <!--FoodTag Data-->
+        <scene sceneID="PZ5-of-Pks">
+            <objects>
+                <viewController storyboardIdentifier="FoodTagData" id="zEh-iY-fqE" customClass="FoodTagsViewController" customModule="FoodTagsApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="jvE-6Z-MFj"/>
+                        <viewControllerLayoutGuide type="bottom" id="xpp-xC-xSV"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="5qn-jU-vOJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="39d-xr-nMU">
+                                <rect key="frame" x="0.0" y="44" width="375" height="623"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="tkK-NK-p48">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="800"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Temperature Over Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="cGV-Jr-TUO">
+                                                <rect key="frame" x="8" y="48" width="355" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" id="yZy-6V-FLB" customClass="LineChartView" customModule="Charts">
+                                                <rect key="frame" x="10" y="88" width="355" height="256"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </view>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Illumination Over Time" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="dNv-OW-fCj">
+                                                <rect key="frame" x="10" y="352" width="355" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Product ID:" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="9W5-vm-4yf">
+                                                <rect key="frame" x="10" y="0.0" width="355" height="40"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                                <fontDescription key="fontDescription" type="system" weight="thin" pointSize="17"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <view contentMode="scaleToFill" id="d1E-UG-k4O" customClass="LineChartView" customModule="Charts">
+                                                <rect key="frame" x="8" y="400" width="355" height="256"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES"/>
+                                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="800" id="SdT-7M-XH6"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="tkK-NK-p48" secondAttribute="trailing" id="OXZ-3m-9PA"/>
+                                    <constraint firstItem="tkK-NK-p48" firstAttribute="leading" secondItem="39d-xr-nMU" secondAttribute="leading" id="TAc-ne-R89"/>
+                                    <constraint firstAttribute="bottom" secondItem="tkK-NK-p48" secondAttribute="bottom" id="bHH-wq-1kz"/>
+                                    <constraint firstItem="tkK-NK-p48" firstAttribute="centerX" secondItem="39d-xr-nMU" secondAttribute="centerX" id="h0A-vp-frv"/>
+                                    <constraint firstItem="tkK-NK-p48" firstAttribute="top" secondItem="39d-xr-nMU" secondAttribute="top" id="n09-Mw-j11"/>
+                                </constraints>
+                                <viewLayoutGuide key="contentLayoutGuide" id="8RI-xi-8wK"/>
+                                <viewLayoutGuide key="frameLayoutGuide" id="j3z-O8-pTQ"/>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="39d-xr-nMU" firstAttribute="top" secondItem="5qn-jU-vOJ" secondAttribute="topMargin" id="a8k-HH-3I8"/>
+                            <constraint firstItem="39d-xr-nMU" firstAttribute="centerX" secondItem="5qn-jU-vOJ" secondAttribute="centerX" id="erk-Fo-KIb"/>
+                            <constraint firstItem="39d-xr-nMU" firstAttribute="leading" secondItem="5qn-jU-vOJ" secondAttribute="leadingMargin" constant="-16" id="jNZ-Xz-cbL"/>
+                            <constraint firstAttribute="bottom" secondItem="39d-xr-nMU" secondAttribute="bottom" id="vqP-zX-omU"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="FoodTag Data" id="doD-HK-Oqy"/>
+                    <connections>
+                        <outlet property="illumChart" destination="d1E-UG-k4O" id="WH4-Ek-89K"/>
+                        <outlet property="productID" destination="9W5-vm-4yf" id="xiY-AF-C1I"/>
+                        <outlet property="tempChart" destination="yZy-6V-FLB" id="G1V-M9-fgh"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qd4-wH-T4z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1988" y="-520.38980509745136"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="7la-xi-Phe">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="5UL-UK-xWV" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="3MU-CU-gQC">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="hKq-fJ-BLh" kind="relationship" relationship="rootViewController" id="LAK-Yc-Not"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="OlN-lA-AXB" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="92" y="-520.38980509745136"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo.png" width="1193" height="1955"/>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemGray6Color">
+            <color red="0.94901960784313721" green="0.94901960784313721" blue="0.96862745098039216" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
+    </resources>
+</document>
