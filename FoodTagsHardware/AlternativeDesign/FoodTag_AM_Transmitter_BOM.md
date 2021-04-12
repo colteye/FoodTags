@@ -35,7 +35,7 @@
 - ERT-J0ER103J thermistor $0.03546 @ qty 1000
 
 ## Overall BOM (NOT INCLUDING BOARD, MANUFACTURING, AND ANTENNA):
-$0.46789
+$0.46789 @ qty 1000
 
 ## Notes
 Price could potentially be further reduced if input of energy harvesting is already an AC carrier signal, maybe remove oscillator?
