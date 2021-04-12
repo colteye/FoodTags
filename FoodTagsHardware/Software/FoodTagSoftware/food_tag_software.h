@@ -1,3 +1,11 @@
+//
+//  food_tag_software.h
+//  FoodTagSoftware
+//
+//  Created by Erik Coltey on 4/11/21.
+//  Copyright 2021 Erik Coltey. All rights reserved.
+//
+
 #ifndef FOOD_TAG_SOFTWARE_H_
 #define FOOD_TAG_SOFTWARE_H_
 

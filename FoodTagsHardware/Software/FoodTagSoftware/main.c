@@ -1,3 +1,11 @@
+//
+//  main.c
+//  FoodTagSoftware
+//
+//  Created by Erik Coltey on 4/11/21.
+//  Copyright 2021 Erik Coltey. All rights reserved.
+//
+
 #include <food_tag_software.h>
 #include <RF430_example.h> //Code to help interact with RF430 using I2C.
 #include <stdint.h>
