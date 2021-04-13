@@ -4,7 +4,6 @@ FoodTags is meant to be a platform for suppliers and consumers to be able to est
 
 FoodTags can currently use analog thermistors/photoresistors to measure temperature and illuminance respectively.
 <img src="https://user-images.githubusercontent.com/6888483/114496734-963c7b80-9bee-11eb-9260-f660a7d02693.png" width="50%" height="50%">
-
 ## FoodTagsApp: Folder that contains the source code for the FoodTags iOS application.
 
 ### This app allows you to:
