@@ -8,7 +8,7 @@ FoodTags can currently use analog thermistors/photoresistors to measure temperat
 
 ### This app allows you to:
 - Scan FoodTags using the NFC NDEF protocol
-- Measure and visualize the temperature (in Fahrenheit) and illuminance (in Lux) e of the tag's immediate area
+- Measure and visualize the temperature (in Fahrenheit) and illuminance (in Lux) of the tag's immediate area
 
 <img src="https://user-images.githubusercontent.com/6888483/114378631-e61b3400-9b55-11eb-9812-6d40a019fdf4.PNG" width="50%" height="50%">
 
