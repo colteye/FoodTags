@@ -18,7 +18,7 @@
 #define MODULO(x, m) ( x & (m - 1) )
 
 // Verify that a sample is valid.
-#define VALID_SAMPLE(t_i_ptr) ( (t_i_ptr->temp <= 1024) && (t_i_ptr->illum <= 1024) )
+#define VALID_SAMPLE(t_i_ptr) ( (t_i_ptr->temp <= 1023) && (t_i_ptr->illum <= 1023) )
 
 // Flash sectors are 64 bytes.
 #define FLASH_SECTOR_SIZE 64
