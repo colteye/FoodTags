@@ -1,5 +1,7 @@
 # FoodTags: Ultra-Low power tags for IoT food monitoring
 
+<img src="https://user-images.githubusercontent.com/6888483/114496734-963c7b80-9bee-11eb-9260-f660a7d02693.png" width="50%" height="50%">
+
 FoodTags is meant to be a platform for suppliers and consumers to be able to estimate the status of food by measuring properties of the food storage environment using batteryless IoT sensors. These sensors are powered using energy harvesting from the RF waves being sent by a reciever, such as a smartphone. 
 
 FoodTags can currently use analog thermistors/photoresistors to measure temperature and illuminance respectively.
