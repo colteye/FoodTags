@@ -12,12 +12,24 @@ FoodTags can currently use analog thermistors/photoresistors to measure temperat
 - Send NFC NDEF messages with all of the stored measurements on the device.
 - Use a custom algorithm to save samples in a circular queue without needing to rely on information that needs to be written on every NFC detection.
 
-## AlternativeDesign: Folder that contains the LTspice files and informational diagram of the AM transmitter design.
+## AlternativeDesign: Folder that contains the files for:
+- A simple 5 component transmitter as well as reciever that was also proven on the breadboard
+- A simulated AM Transmitter design using LTspice
+- A version of the tag replacing the MCU with an ADC to reduce cost
 
-### This includes:
+### 5 Component design includes:
+- A BOM of around < 0.50$ in component parts for the transmitter, and < 1$ for the reciever.
+- Image of breadboarded circuit.
+- Image of photoresistor sensing output.
+
+### AM Transmitter design includes:
 - A BOM of around < 0.50$ in component parts.
 - Image of simulation results.
 - All LTspice files used for developing this design.
+
+### ADC design includes:
+- A BOM of around ~2.5$ in component parts using only a thermistor.
+- Schematic files.
 
 ## Hardware: Folder that contains the PCB and schematic files for the current iteration of the FoodTags hardware.
 
