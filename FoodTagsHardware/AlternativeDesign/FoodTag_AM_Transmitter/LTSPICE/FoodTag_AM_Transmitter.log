@@ -1,0 +1,32 @@
+Circuit: * C:\Users\colte\Documents\FIU\Classes\SeniorDesign\FoodTags\FoodTagsHardware\AlternativeDesign\LTspiceDesign\FoodTag_AM_Transmitter.asc
+
+Direct Newton iteration for .op point succeeded.
+.step r=1
+.step r=10001
+.step r=20001
+.step r=30001
+.step r=40001
+.step r=50001
+.step r=60001
+.step r=70001
+.step r=80001
+.step r=90001
+.step r=100000
+
+Date: Tue Apr 13 12:41:03 2021
+Total elapsed time: 7.169 seconds.
+
+tnom = 27
+temp = 27
+method = modified trap
+totiter = 210418
+traniter = 210411
+tranpoints = 71609
+accept = 47985
+rejected = 23624
+matrix size = 19
+fillins = 16
+solver = Normal
+Matrix Compiler1: 2.57 KB object code size  0.4/0.2/[0.1]
+Matrix Compiler2: 2.00 KB object code size  0.1/0.2/[0.1]
+
